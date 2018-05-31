@@ -6,6 +6,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>회원가입</title>
+<style>
+.error {
+	color: #ff0000;
+	font-style: italic;
+	font-weight: bold;
+}
+</style>
 
 <%@ include file="./commons/_header.jspf" %>
 
@@ -30,24 +37,31 @@
 							<label class="control-label" for="userId">사용자 아이디</label>
 							<div class="controls">
 								<form:input path="userId" />
+								<br/>
+								<form:errors path="userId" cssClass="error" />
 							</div>
 						</div>
 						<div class="control-group">
 							<label class="control-label" for="password">비밀번호</label>
 							<div class="controls">
-								<form:input path="password" />
+								<form:password path="password" />
+								<br/>
+								<form:errors path="password" cssClass="error" />
 							</div>
 						</div>
 						<div class="control-group">
 							<label class="control-label" for="name">이름</label>
 							<div class="controls">
 								<form:input path="name" />
+								<br/>
+								<form:errors path="name" cssClass="error" />
 							</div>
 						</div>
 						<div class="control-group">
 							<label class="control-label" for="email">이메일</label>
 							<div class="controls">
 								<form:input path="email" />
+								<form:errors path="email" cssClass="error" />
 							</div>
 						</div>
 						<br />
