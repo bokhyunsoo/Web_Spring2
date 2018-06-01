@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import net.home.dao.users.UserDao;
+import net.home.domain.users.Authenticate;
 import net.home.domain.users.User;
 
 import org.slf4j.Logger;
@@ -29,7 +30,7 @@ public class UserController {
 	@RequestMapping("/form")
 	public String form(Model model) {
 		model.addAttribute("user", new User());
-		return "form";
+		return "users/form";
 	}
 	
 	@RequestMapping(value="", method=RequestMethod.POST)
@@ -42,10 +43,38 @@ public class UserController {
 				log.debug("error : {}, {}", error.getCode() ,error.getDefaultMessage());
 			}
 			
-			return "form";
+			return "users/form";
 		}
 		userDao.create(user);
 		log.debug("Database : {}", userDao.findById(user.getUserId()));
 		return "redirect:/";
+	}
+	
+	@RequestMapping("/login/form")
+	public String loginform(Model model) {
+		model.addAttribute("authenticate", new Authenticate());
+		return "users/login";
+	}
+	
+	@RequestMapping("/login")
+	public String login(@Valid Authenticate authenticate, BindingResult bindingResult, Model model) {
+		if (bindingResult.hasErrors()) {
+			return "users/login";
+		}
+		
+		User user = userDao.findById(authenticate.getUserId());
+		if (user == null) {
+			model.addAttribute("errorMessage", "존재하지 않는 사용자입니다.");
+			return "users/login";
+			// TODO 에러 처리 - 존재하지 않는 사용자입니다.
+		}
+		
+		if (user.getPassword().equals(authenticate.getPassword())) {
+			// TODO 에러 처리 - 비밀번호가 틀립니다.
+		}
+		
+		// TODO 세션에 사용자 정보 저장
+		
+		return "users/login";
 	}
 }
