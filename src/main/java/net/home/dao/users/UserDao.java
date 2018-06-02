@@ -5,15 +5,16 @@ import java.sql.SQLException;
 
 import javax.annotation.PostConstruct;
 
+import net.home.domain.users.User;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
-
-import net.home.domain.users.User;
 
 public class UserDao extends JdbcDaoSupport{
 	private static final Logger log = LoggerFactory.getLogger(UserDao.class);
@@ -38,7 +39,13 @@ public class UserDao extends JdbcDaoSupport{
 			}
 			
 		};
-		return getJdbcTemplate().queryForObject(sql, rowMapper, userId);
+		
+		try{
+			return getJdbcTemplate().queryForObject(sql, rowMapper, userId);
+		} catch (EmptyResultDataAccessException e){
+			return null;
+		}
+		
 	}
 
 	public void create(User user) {

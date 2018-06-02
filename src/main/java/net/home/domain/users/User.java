@@ -63,7 +63,13 @@ public class User {
 		this.email = email;
 	}
 
-	
+	public boolean matchPassword(Authenticate authenticate) {
+		if (this.password == null) {
+			return false;
+		}
+		
+		return authenticate.matchPassword(this.password);
+	}
 	
 	@Override
 	public int hashCode() {
@@ -107,8 +113,4 @@ public class User {
 		return "User [userId=" + userId + ", password=" + password + ", name=" + name + ", email=" + email + "]";
 	}
 
-	
-	
-	
-	
 }

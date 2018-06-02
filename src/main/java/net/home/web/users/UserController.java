@@ -69,7 +69,9 @@ public class UserController {
 			// TODO 에러 처리 - 존재하지 않는 사용자입니다.
 		}
 		
-		if (user.getPassword().equals(authenticate.getPassword())) {
+		if (!user.matchPassword(authenticate)) {
+			model.addAttribute("errorMessage", "비밀번호가 틀립니다.");
+			return "users/login";
 			// TODO 에러 처리 - 비밀번호가 틀립니다.
 		}
 		
