@@ -2,6 +2,7 @@ package net.home.web.users;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import net.home.dao.users.UserDao;
@@ -57,7 +58,7 @@ public class UserController {
 	}
 	
 	@RequestMapping("/login")
-	public String login(@Valid Authenticate authenticate, BindingResult bindingResult, Model model) {
+	public String login(@Valid Authenticate authenticate, BindingResult bindingResult, HttpSession session , Model model) {
 		if (bindingResult.hasErrors()) {
 			return "users/login";
 		}
@@ -75,8 +76,16 @@ public class UserController {
 			// TODO 에러 처리 - 비밀번호가 틀립니다.
 		}
 		
+		session.setAttribute("userId", user.getUserId());
+		
 		// TODO 세션에 사용자 정보 저장
 		
-		return "users/login";
+		return "redirect:/";
+	}
+	
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute("userId");
+		return "redirect:/";
 	}
 }
