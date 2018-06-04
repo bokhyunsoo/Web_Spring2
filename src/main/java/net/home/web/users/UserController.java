@@ -81,10 +81,10 @@ public class UserController {
 			throw new NullPointerException();
 		}
 		
-		String userId = (String)temp;
-		if (!user.matchUserId(userId)){
-			throw new NullPointerException();
-		}
+//		String userId = (String)temp;
+//		if (!user.matchUserId(userId)){
+//			throw new NullPointerException();
+//		}
 		
 		userDao.update(user);
 		log.debug("Database : {}", userDao.findById(user.getUserId()));
