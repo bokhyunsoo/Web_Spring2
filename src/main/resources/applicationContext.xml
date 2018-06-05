@@ -20,9 +20,6 @@
 		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
 
-	<!-- <bean id="userDao" class="net.home.dao.users.JdbcUserDao"
-		p:dataSource-ref="dataSource" /> -->
-
 	<bean id="userDao" class="net.home.dao.users.MyBatisUserDao"
 		p:sqlSession-ref="sqlSession"
 		p:dataSource-ref="dataSource" />
